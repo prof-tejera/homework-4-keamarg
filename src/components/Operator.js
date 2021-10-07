@@ -1,5 +1,6 @@
 import { Component } from "react";
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   /* Adapt the color based on the type prop */
@@ -35,5 +36,11 @@ class Operator extends Component {
     );
   }
 }
+
+Operator.propTypes = {
+  type: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
 
 export default Operator;

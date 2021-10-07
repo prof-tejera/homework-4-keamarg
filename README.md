@@ -14,6 +14,10 @@ As you can tell the current layout needs a lot of styling work. Modify the layou
 2. Define all PropTypes for `Number`, `Operator`, and `Screen` components. If you add more components make sure to define the PropTypes.
 3. Deploy your application using any method you want (repo is setup for Github actions). Add the url: URL_TO_PROJECT
 
+Hey Nico and Brandon, I got lost in my undo/redo frenzy, and lost some bug fixes (mostly related to decimal numbers, right now the second number copies first when pressing the “.” I had (almost) fixed this, but unfortunately I do not have time to retrace my steps tonight before the deadline).
+
+Also, I did not fix the NaN bug when pressing an operator followed by =
+
 ### Deployment Instructions (Github actions)
 
 - Go to `Settings`

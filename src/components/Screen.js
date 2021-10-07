@@ -1,5 +1,6 @@
 import { Component } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -20,5 +21,8 @@ class Screen extends Component {
     return <Container>{this.props.value}</Container>;
   }
 }
+Screen.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 export default Screen;

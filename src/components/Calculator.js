@@ -12,19 +12,23 @@ class Calculator extends Component {
   };
 
   handleNumberClick = (number) => {
+    console.log(typeof this.state.first);
+
     if (!this.state.operator) {
       this.setState({
-        first:
+        first: parseFloat(
           this.state.first.toString().length > 9
             ? parseFloat(this.state.first.toString().slice(0, 10))
-            : `${this.state.first || ""}${number}`,
+            : `${this.state.first || ""}${number}`
+        ),
       });
     } else {
       this.setState({
-        second:
+        second: parseFloat(
           this.state.second != null && this.state.second.toString().length > 9
             ? parseFloat(this.state.second.toString().slice(0, 10))
-            : `${this.state.second || ""}${number}`,
+            : `${this.state.second || ""}${number}`
+        ),
       });
     }
   };
@@ -58,9 +62,11 @@ class Calculator extends Component {
     } else if (operator === ".") {
       this.setState({
         operator: null,
+        //parseFloat(
         first: `${this.state.first}${
           this.state.first.toString().includes(".") ? "" : "."
         }`,
+        //)
         second: null,
       });
     } else if (operator === "clear") {

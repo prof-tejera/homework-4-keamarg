@@ -1,5 +1,6 @@
 import { Component } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   /* Adapt the size based on the size prop */
@@ -25,5 +26,9 @@ class Number extends Component {
     );
   }
 }
-
+Number.propTypes = {
+  large: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
+};
 export default Number;
