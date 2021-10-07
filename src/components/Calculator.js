@@ -6,23 +6,37 @@ import Screen from "./Screen";
 
 class Calculator extends Component {
   state = {
-    first: null,
+    first: 0,
     operator: null,
     second: null,
   };
 
   handleNumberClick = (number) => {
+    console.log(typeof this.state.first);
+
     if (!this.state.operator) {
-      this.setState({ first: `${this.state.first || ""}${number}` });
+      this.setState({
+        first: parseFloat(
+          this.state.first.toString().length > 9
+            ? parseFloat(this.state.first.toString().slice(0, 10))
+            : `${this.state.first || ""}${number}`
+        ),
+      });
     } else {
-      this.setState({ second: `${this.state.second || ""}${number}` });
+      this.setState({
+        second: parseFloat(
+          this.state.second != null && this.state.second.toString().length > 9
+            ? parseFloat(this.state.second.toString().slice(0, 10))
+            : `${this.state.second || ""}${number}`
+        ),
+      });
     }
   };
 
   handleOperatorClick = (operator) => {
     if (operator === "=") {
-      const first = parseInt(this.state.first);
-      const second = parseInt(this.state.second);
+      const first = parseFloat(this.state.first);
+      const second = parseFloat(this.state.second);
 
       if (this.state.operator === "+") {
         this.setState({ operator: null, first: first + second, second: null });
@@ -33,8 +47,30 @@ class Calculator extends Component {
       } else if (this.state.operator === "x") {
         this.setState({ operator: null, first: first * second, second: null });
       }
+    } else if (operator === "+/-") {
+      this.setState({
+        operator: null,
+        first: this.state.first * -1,
+        second: null,
+      });
+    } else if (operator === "%") {
+      this.setState({
+        operator: null,
+        first: this.state.first / 100,
+        second: null,
+      });
+    } else if (operator === ".") {
+      this.setState({
+        operator: null,
+        //parseFloat(
+        first: `${this.state.first}${
+          this.state.first.toString().includes(".") ? "" : "."
+        }`,
+        //)
+        second: null,
+      });
     } else if (operator === "clear") {
-      this.setState({ first: null, second: null, operator: null });
+      this.setState({ first: 0, second: null, operator: null });
     } else {
       this.setState({ operator });
     }
@@ -44,31 +80,66 @@ class Calculator extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <Screen value={this.getScreenValue()} />
-        <div style={{ display: "flex" }}>
+        <div>
           <div>
-            <Number value={0} onClick={this.handleNumberClick} />
-            <Number value={1} onClick={this.handleNumberClick} />
-            <Number value={2} onClick={this.handleNumberClick} />
-            <Number value={3} onClick={this.handleNumberClick} />
-            <Number value={4} onClick={this.handleNumberClick} />
-            <Number value={5} onClick={this.handleNumberClick} />
-            <Number value={6} onClick={this.handleNumberClick} />
-            <Number value={7} onClick={this.handleNumberClick} />
-            <Number value={8} onClick={this.handleNumberClick} />
-            <Number value={9} onClick={this.handleNumberClick} />
-          </div>
-          <div style={{ paddingLeft: 10 }}>
-            <Operator value="+" onClick={this.handleOperatorClick} />
-            <Operator value="/" onClick={this.handleOperatorClick} />
-            <Operator value="x" onClick={this.handleOperatorClick} />
-            <Operator value="-" onClick={this.handleOperatorClick} />
-            <Operator value="=" onClick={this.handleOperatorClick} />
-            <Operator value="clear" onClick={this.handleOperatorClick} />
+            <div style={{ display: "flex" }}>
+              <Operator value="clear" onClick={this.handleOperatorClick} />
+              <Operator value="+/-" onClick={this.handleOperatorClick} />
+              <Operator value="%" onClick={this.handleOperatorClick} />
+              <Operator
+                value="/"
+                type="operator"
+                onClick={this.handleOperatorClick}
+              />
+            </div>
+            <div style={{ display: "flex" }}>
+              <Number value={7} onClick={this.handleNumberClick} />
+              <Number value={8} onClick={this.handleNumberClick} />
+              <Number value={9} onClick={this.handleNumberClick} />
+              <Operator
+                value="x"
+                type="operator"
+                onClick={this.handleOperatorClick}
+              />
+            </div>
+            <div style={{ display: "flex" }}>
+              <Number value={4} onClick={this.handleNumberClick} />
+              <Number value={5} onClick={this.handleNumberClick} />
+              <Number value={6} onClick={this.handleNumberClick} />
+              <Operator
+                value="-"
+                type="operator"
+                onClick={this.handleOperatorClick}
+              />
+            </div>
+            <div style={{ display: "flex" }}>
+              <Number value={1} onClick={this.handleNumberClick} />
+              <Number value={2} onClick={this.handleNumberClick} />
+              <Number value={3} onClick={this.handleNumberClick} />
+              <Operator
+                value="+"
+                type="operator"
+                onClick={this.handleOperatorClick}
+              />
+            </div>
+            <div style={{ display: "flex" }}>
+              <Number large={true} value={0} onClick={this.handleNumberClick} />
+              <Operator
+                value="."
+                type="other"
+                onClick={this.handleOperatorClick}
+              />
+              <Operator
+                value="="
+                type="operator"
+                onClick={this.handleOperatorClick}
+              />
+            </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
